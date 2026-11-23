@@ -98,12 +98,11 @@ interface AdminAuthState {
   accessLogs: { at: string; email: string; ip: string; outcome: string }[];
 }
 
+const DEFAULT_ADMIN_PASSWORD = 'admin4321';
 const adminState: AdminAuthState = {
   email: (process.env.ADMIN_BOOTSTRAP_EMAIL || 'admin@x.com').toLowerCase(),
-  passwordHash: process.env.ADMIN_BOOTSTRAP_PASSWORD
-    ? hashPasswordScrypt(process.env.ADMIN_BOOTSTRAP_PASSWORD)
-    : null,
-  mustChangePassword: Boolean(process.env.ADMIN_BOOTSTRAP_PASSWORD),
+  passwordHash: hashPasswordScrypt(process.env.ADMIN_BOOTSTRAP_PASSWORD || DEFAULT_ADMIN_PASSWORD),
+  mustChangePassword: false,
   sessionEpoch: 1,
   failedAttempts: new Map(),
   accessLogs: [],
